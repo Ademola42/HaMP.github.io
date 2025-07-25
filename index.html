@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[Your Name] - Music Producer & Songwriter</title>
+    <title>[Ademola Adeniyi] - Music Producer & Songwriter</title>
     <style>
         body { 
             font-family: Arial, sans-serif; 
@@ -57,18 +57,24 @@
         .projects img:hover { 
             transform: scale(1.1); 
         }
-        .mix-form, .contact-form, .promo-form { 
+        .mix-form, .contact-form, .demo-form { 
             display: flex; 
             flex-direction: column; 
             max-width: 400px; 
+            margin: 0 auto;
         }
-        .mix-form input, .mix-form textarea, .contact-form input, .contact-form textarea, .promo-form input, .promo-form textarea { 
+        .mix-form input, .mix-form textarea, .contact-form input, .contact-form textarea, .demo-form input, .demo-form textarea, .demo-form input[type="file"] { 
             margin: 10px 0; 
             padding: 10px; 
             border: none; 
             border-radius: 5px; 
+            background: #444; 
+            color: #fff; 
         }
-        .mix-form button, .contact-form button, .promo-form button { 
+        .mix-form input::placeholder, .mix-form textarea::placeholder, .contact-form input::placeholder, .contact-form textarea::placeholder, .demo-form input::placeholder, .demo-form textarea::placeholder { 
+            color: #ccc; 
+        }
+        .mix-form button, .contact-form button, .demo-form button { 
             padding: 10px; 
             background: #00ccff; 
             border: none; 
@@ -76,11 +82,13 @@
             color: #fff; 
             cursor: pointer; 
         }
-        .mix-form button:hover, .contact-form button:hover, .promo-form button:hover { 
+        .mix-form button:hover, .contact-form button:hover, .demo-form button:hover { 
             background: #0099cc; 
         }
-        .audio-player { 
-            margin: 20px 0; 
+        .demo-form p#file-name { 
+            margin: 10px 0; 
+            color: #ccc; 
+            text-align: center; 
         }
         footer { 
             text-align: center; 
@@ -101,7 +109,7 @@
 </head>
 <body>
     <header>
-        <h1>[Your Name] - Music Producer & Songwriter</h1>
+        <h1>[Ademola Adeniyi] - Music Producer & Songwriter</h1>
         <nav>
             <a href="#home">Home</a>
             <a href="#about">About</a>
@@ -113,13 +121,13 @@
     </header>
     <section id="home" class="section">
         <h2>Welcome</h2>
-        <p>Hello! This is [Your Name]'s personal space to share my music production and songwriting journey. Explore, submit mixes, or join my recording promo!</p>
+        <p>Hello! This is my personal space to share my music production and songwriting journey. Explore, submit mixes, or join my recording promo!</p>
     </section>
     <section id="about" class="section">
         <h2>About Me</h2>
         <div class="about-content">
             <div class="about-img" id="profile-pic"></div> <!-- Placeholder for your picture -->
-            <p>Hi, I'm [Your Name], a passionate music producer and songwriter. I specialize in crafting beats, writing lyrics, and producing tracks across various genres. My work reflects my love for creativity and innovation in music.</p>
+            <p>Hi, I'm a passionate music producer and songwriter. I specialize in crafting beats, writing lyrics, and producing tracks across various genres. My work reflects my love for creativity and innovation in music.</p>
         </div>
     </section>
     <section id="projects" class="section">
@@ -148,21 +156,17 @@
         <ul>
             <li>1-day recording (8 hours long)</li>
             <li>Must be a full band (singer and instrumentalists)</li>
-            <li>Submit a song demo</li>
+            <li>Submit a rehearsal demo (MP3 only)</li>
         </ul>
-        <div class="audio-player">
-            <p>Sample Demo:</p>
-            <audio controls>
-                <source src="sample-demo.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
-        </div>
-        <form class="promo-form">
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Your Email" required>
-            <input type="text" placeholder="Band Name" required>
-            <input type="url" placeholder="Song Demo URL (e.g., Google Drive Link)" required>
-            <button type="submit">Register for Promo</button>
+        <p>Submit your rehearsal demo!</p>
+        <form class="demo-form" id="demoForm">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="number" name="whatsapp" placeholder="Your WhatsApp Number" required>
+            <input type="text" name="bandName" placeholder="Band Name" required>
+            <textarea name="bandDescription" placeholder="Brief Description of Your Band" rows="5" required></textarea>
+            <input type="file" id="demoUpload" name="demo" accept="audio/mpeg" required>
+            <p id="file-name">No file selected</p>
+            <button type="submit">Submit Demo</button>
         </form>
     </section>
     <section id="contact" class="section">
@@ -175,11 +179,71 @@
         </form>
     </section>
     <footer>
+    	
         <p>Follow me: 
-            <a href="https://youtube.com/yourhandle">youtube</a> | 
-            <a href="https://facebook.com/in/ademolaadeniyiotto">facebookj</a> |
-            <a href="https://youtube.com/yourhandle">instagram</a>
+            <a href="https://youtube.com/@adeniyi-otto?si=mjvcZ-io39CVgWRG">youtube</a> | 
+            <a href="https://facebook.com/ademolaadeniyiotto">facebook</a> | 
+            <a href="https://instagram.com/yourhandle">instagram</a>
         </p>
     </footer>
+
+    <script>
+        // Handle demo form submission
+        document.getElementById('demoForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const fileInput = document.getElementById('demoUpload');
+            const file = fileInput.files[0];
+            const fileName = file ? file.name : 'No file selected';
+            document.getElementById('file-name').textContent = fileName;
+
+            // Validate MP3 file
+            if (!file) {
+                alert('Please select an MP3 file to upload.');
+                return;
+            }
+            if (file.type !== 'audio/mpeg') {
+                alert('Please upload an MP3 file.');
+                fileInput.value = ''; // Clear the input
+                document.getElementById('file-name').textContent = 'No file selected';
+                return;
+            }
+
+            // Create a FormData object to send the file and form data
+            const formData = new FormData(this);
+            // FormData automatically includes name, whatsapp, bandName, bandDescription, and demo (file)
+
+            // Send form data to server (replace with your server endpoint)
+            fetch('YOUR_SERVER_ENDPOINT', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Demo and form data uploaded successfully!');
+                console.log(data);
+                // Reset form after successful submission
+                document.getElementById('demoForm').reset();
+                document.getElementById('file-name').textContent = 'No file selected';
+            })
+            .catch(error => {
+                alert('Error uploading demo.');
+                console.error(error);
+            });
+        });
+
+        // Update file name display on file selection
+        document.getElementById('demoUpload').addEventListener('change', function() {
+            const file = this.files[0];
+            const fileName = file ? file.name : 'No file selected';
+            document.getElementById('file-name').textContent = fileName;
+
+            if (file && file.type !== 'audio/mpeg') {
+                alert('Please upload an MP3 file.');
+                this.value = ''; // Clear the input
+                document.getElementById('file-name').textContent = 'No file selected';
+            }
+        });
+    </script>
 </body>
 </html>
